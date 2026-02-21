@@ -37,11 +37,12 @@ async def move_and_click_real(selector_or_text: str) -> str:
             center_x = box["x"] + box["width"] / 2
             center_y = box["y"] + box["height"] / 2
             
-            await page.mouse.move(center_x, center_y, steps=10) 
-            await asyncio.sleep(0.2) 
+            # steps alto = movimiento más lento y visible para el usuario
+            await page.mouse.move(center_x, center_y, steps=45)
+            await asyncio.sleep(0.4)
             
             await page.mouse.click(center_x, center_y)
-            await asyncio.sleep(1) # Wait for the page to react to the click
+            await asyncio.sleep(0.8)
             
             return f"Action completed: Clicked on '{selector_or_text}'."
             
@@ -93,16 +94,14 @@ async def fill_field_real(selector_or_text: str, text_to_type: str) -> str:
             center_x = box["x"] + box["width"] / 2
             center_y = box["y"] + box["height"] / 2
             
-            await page.mouse.move(center_x, center_y, steps=80)
-            await asyncio.sleep(0.2) 
+            await page.mouse.move(center_x, center_y, steps=50)
+            await asyncio.sleep(0.35)
             await page.mouse.click(center_x, center_y)
-            await asyncio.sleep(0.2)
+            await asyncio.sleep(0.3)
             
-            # 1. Limpiamos el campo de forma segura
             await element.clear()
-            
-            # 2. Escribimos secuencialmente como un humano (aumenta el delay para que teclee más lento)
-            await element.press_sequentially(text_to_type, delay=150)
+            # delay alto = tecleo más lento y visible
+            await element.press_sequentially(text_to_type, delay=120)
             
             # 3. Pulsamos Enter
             await page.keyboard.press("Enter")

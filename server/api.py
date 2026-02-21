@@ -38,6 +38,24 @@ class ChatRequest(BaseModel):
 
 sessions = {}
 
+
+def _chunk_content_to_text(content) -> str:
+    """Convierte el content del chunk (str o lista multimodal) a un único string."""
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, str):
+                parts.append(block)
+            elif isinstance(block, dict) and "text" in block:
+                parts.append(block["text"])
+        return "".join(parts)
+    return ""
+
+
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     # --- 1. Inicializar sesión ---
@@ -71,8 +89,9 @@ async def chat_endpoint(request: ChatRequest):
             if kind == "on_chat_model_stream":
                 # Filtramos para que solo salgan los tokens del nodo 'sales_agent'
                 if event["metadata"].get("langgraph_node") == "sales_agent":
-                    content = event["data"]["chunk"].content
-                    if content and isinstance(content, str):
+                    raw = event["data"]["chunk"].content
+                    content = _chunk_content_to_text(raw)
+                    if content:
                         payload = json.dumps({"type": "token", "content": content})
                         yield f"data: {payload}\n\n"
             

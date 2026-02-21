@@ -71,8 +71,14 @@ async def sales_agent_node(state: AgentState):
     else:
         messages_to_pass.append(HumanMessage(content=last_human_msg))
         
-    response = await llm_with_tools.ainvoke(
-        messages_to_pass, 
-        config={"tags": ["main_agent"]} 
-    )
+    # Usar astream para que el API pueda enviar tokens en tiempo real (SSE)
+    response = None
+    async for chunk in llm_with_tools.astream(
+        messages_to_pass,
+        config={"tags": ["main_agent"]},
+    ):
+        if response is None:
+            response = chunk
+        else:
+            response = response + chunk
     return {"messages": [response]}

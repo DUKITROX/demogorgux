@@ -52,6 +52,10 @@ export default function DemoView() {
           ← Back
         </button>
         <span className="demo__title">Demo</span>
+        <span className="demo__status-badge">
+          <span className="demo__status-dot" aria-hidden />
+          Agent Status: Online
+        </span>
         {url && <span className="demo__url">{url}</span>}
       </header>
 
@@ -63,6 +67,12 @@ export default function DemoView() {
             </span>
           </div>
         </main>
+
+        <div className="demo__roi-widget" aria-label="Economic value">
+          <strong>Economic Value</strong>
+          <div className="demo__roi-human">Estimated Human Cost: $150/hr</div>
+          <div className="demo__roi-agent">Current Agent Cost: $0.05</div>
+        </div>
 
         <aside className="demo__chat">
           <div className="demo__chat-messages">

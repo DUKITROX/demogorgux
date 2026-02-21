@@ -35,4 +35,15 @@ async def fill_input_field(element_description: str, text_to_type: str) -> str:
     result = await fill_field_real(element_description, text_to_type)
     return result
 
-browser_tools = [click_element, scroll_page, fill_input_field]
+@tool
+async def go_to_url(url: str) -> str:
+    """
+    Usa esta herramienta cuando el usuario te pida ir a una página web específica o visitar una URL.
+    Asegúrate de incluir 'https://' en la URL.
+    """
+    from browser.controller import get_current_page
+    page = await get_current_page()
+    await page.goto(url)
+    return f"He navegado a la página: {url}"
+
+browser_tools = [click_element, scroll_page, fill_input_field, go_to_url]

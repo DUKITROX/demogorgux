@@ -119,6 +119,24 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="homepage__recent-demos" aria-label="Recent Demos">
+          <h2 className="homepage__recent-demos-title">Recent Demos</h2>
+          <div className="homepage__recent-demos-grid">
+            <div className="homepage__demo-card">
+              <span className="homepage__demo-name">Stripe Demo</span>
+              <span className="homepage__demo-saved">$242.00 saved</span>
+            </div>
+            <div className="homepage__demo-card">
+              <span className="homepage__demo-name">Linear Setup</span>
+              <span className="homepage__demo-saved">$189.50 saved</span>
+            </div>
+            <div className="homepage__demo-card">
+              <span className="homepage__demo-name">Vercel Pitch</span>
+              <span className="homepage__demo-saved">$312.00 saved</span>
+            </div>
+          </div>
+        </section>
+
         <section className="homepage__financial" aria-label="Financial Impact">
           <h2 className="homepage__financial-title">Financial Impact</h2>
           <div className="homepage__comparison">
@@ -155,6 +173,46 @@ export default function HomePage() {
                   <dd>0s Wait Time</dd>
                 </div>
               </dl>
+            </div>
+          </div>
+        </section>
+
+        <section className="homepage__agent-economy" id="agent-economics" aria-label="The Agent Economy">
+          <h2 className="homepage__agent-economy-title">The Agent Economy</h2>
+          <p className="homepage__agent-economy-desc">
+            Demogorgon runs on Paid.ai infrastructure to prove ROI in real time—every demo,
+            every conversion, and every dollar saved is measured and reported automatically.
+          </p>
+          <div className="homepage__economy-grid">
+            <div className="homepage__economy-block">
+              <span className="homepage__economy-icon homepage__economy-icon--lightning" aria-hidden>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </span>
+              <h3 className="homepage__economy-title">Dynamic Billing</h3>
+              <p className="homepage__economy-desc">Only pay for the minutes the agent is actually talking.</p>
+            </div>
+            <div className="homepage__economy-block">
+              <span className="homepage__economy-icon homepage__economy-icon--graph" aria-hidden>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                </svg>
+              </span>
+              <h3 className="homepage__economy-title">Value Proof</h3>
+              <p className="homepage__economy-desc">Automated reporting on conversion lift and time-to-close.</p>
+            </div>
+            <div className="homepage__economy-block">
+              <span className="homepage__economy-icon homepage__economy-icon--coin" aria-hidden>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v12M9 9a3 3 0 0 0 6 0M9 15a3 3 0 0 0 6 0" />
+                </svg>
+              </span>
+              <h3 className="homepage__economy-title">Zero-Seat Pricing</h3>
+              <p className="homepage__economy-desc">Forget &apos;per-user&apos; licenses. Scale to infinite agents instantly.</p>
             </div>
           </div>
         </section>

@@ -5,17 +5,18 @@ from agent.prompts import get_sales_system_prompt
 from agent.tools import browser_tools
 from pydantic import BaseModel, Field
 
+GEMINI_MODEL = "gemini-2.5-flash"
+
 class IntentGuard(BaseModel):
     is_off_topic: bool = Field(
         description="True ONLY if the user is asking for things unrelated to the software demo."
     )
 
-# Usamos Gemini 1.5 Flash para el supervisor (rápido y gratis/barato)
-routing_llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+# Modelos válidos según list_google_models.py (generativelanguage.googleapis.com)
+routing_llm = ChatGoogleGenerativeAI(model=GEMINI_MODEL, temperature=0)
 supervisor_chain = routing_llm.with_structured_output(IntentGuard)
 
-# Usamos Gemini 1.5 Pro para el agente (visión superior)
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.2)
+llm = ChatGoogleGenerativeAI(model=GEMINI_MODEL, temperature=0.2)
 llm_with_tools = llm.bind_tools(browser_tools)
 
 def supervisor_node(state: AgentState):
@@ -63,5 +64,4 @@ def sales_agent_node(state: AgentState):
         
     # 5. Invocar a Gemini
     response = llm_with_tools.invoke(messages_to_pass)
-    
     return {"messages": [response]}

@@ -4,15 +4,19 @@ import base64
 import urllib.parse
 from PIL import Image
 import io
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # Import our Brain and Body
 from agent.graph import app as langgraph_agent
 from agent.state import AgentState
-from browser.controller import start_browser, take_screenshot, get_current_page
+from browser.controller import start_browser, take_screenshot, get_current_page, close_browser
 from langchain_core.messages import HumanMessage
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger("Interactive-Test")
+
 
 # ---------------------------------------------------------
 # THE TRICKY UI: We inject this HTML to try and fool Claude
@@ -82,15 +86,17 @@ async def run_interactive_chat():
     step_counter = 1
     print("\n" + "="*50)
     print("🟢 INTERACTIVE CHAT STARTED")
-    print("Type 'exit' to quit the test.")
-    print("Try things like: 'Click on Delete Account', 'Type hello in the secret input', or 'Click Save'.")
+    print("  • Escribe 'exit' o 'quit' para salir del chat.")
+    print("  • Prueba: 'Click on Delete Account', 'Type hello in the secret input', 'Click Save'.")
     print("="*50 + "\n")
 
     while True:
         user_input = input("\n🧑 You: ")
         
-        if user_input.lower() in ['exit', 'quit']:
+        if user_input.lower().strip() in ['exit', 'quit']:
             logger.info("Ending test...")
+            await close_browser()
+            print("\n👋 Chat cerrado. Hasta luego.\n")
             break
             
         if not user_input.strip():

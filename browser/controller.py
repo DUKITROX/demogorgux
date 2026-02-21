@@ -16,7 +16,7 @@ async def start_browser(start_url: str) -> Page:
 
     # Start in headless mode (no OS graphical interface)
     # but force a standard window size (720p), perfect for streaming.
-    _browser = await _playwright_instance.chromium.launch(headless=False)
+    _browser = await _playwright_instance.chromium.launch(headless=True)
 
     _context = await _browser.new_context(
         viewport={"width": 1280, "height": 720},
@@ -98,3 +98,16 @@ async def take_screenshot() -> str:
     # Use JPEG at quality 70 so the photo isn't too large and the Claude API is fast to respond
     screenshot_bytes = await _page.screenshot(type="jpeg", quality=70)
     return base64.b64encode(screenshot_bytes).decode('utf-8')
+
+async def close_browser():
+    """Cierra el navegador y Playwright de forma ordenada (evita errores al salir)."""
+    global _playwright_instance, _browser, _context, _page
+    if _browser:
+        await _browser.close()
+        _browser = None
+    if _context:
+        _context = None
+    _page = None
+    if _playwright_instance:
+        await _playwright_instance.stop()
+        _playwright_instance = None

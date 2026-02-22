@@ -114,9 +114,41 @@ export default function Demo() {
     sendMessage(text)
   }
 
+  const unicorns = [
+    { emoji: '🦄', top: '10%', left: '6%', size: '2.2rem', delay: '0s', duration: '6s' },
+    { emoji: '🦄', top: '18%', right: '10%', size: '2.8rem', delay: '1s', duration: '7s' },
+    { emoji: '🦄', top: '72%', left: '8%', size: '2rem', delay: '2s', duration: '5.5s' },
+    { emoji: '🦄', top: '78%', right: '7%', size: '2.5rem', delay: '0.5s', duration: '8s' },
+    { emoji: '🦄', top: '45%', left: '4%', size: '1.8rem', delay: '3s', duration: '6.5s' },
+    { emoji: '🦄', top: '50%', right: '4%', size: '2rem', delay: '1.5s', duration: '7.5s' },
+    { emoji: '🌈', top: '20%', left: '25%', size: '1.8rem', delay: '0.8s', duration: '9s' },
+    { emoji: '🌈', top: '65%', right: '20%', size: '1.5rem', delay: '2.2s', duration: '7s' },
+    { emoji: '✨', top: '35%', left: '12%', size: '1.2rem', delay: '1.8s', duration: '4s' },
+    { emoji: '✨', top: '85%', right: '15%', size: '1rem', delay: '0.3s', duration: '3.5s' },
+  ]
+
   if (isJoining) {
     return (
       <div className="h-screen bg-gray-50 flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Unicornios flotantes */}
+        {unicorns.map((u, i) => (
+          <span
+            key={i}
+            className="absolute animate-float-unicorn select-none pointer-events-none"
+            style={{
+              top: u.top,
+              left: u.left,
+              right: u.right,
+              fontSize: u.size,
+              animationDelay: u.delay,
+              animationDuration: u.duration,
+              opacity: 0.5,
+            }}
+          >
+            {u.emoji}
+          </span>
+        ))}
+
         <div className="relative z-10 flex flex-col items-center animate-fade-in">
           {/* Animated logo ring */}
           <div className="relative w-28 h-28 mb-8">
@@ -171,6 +203,16 @@ export default function Demo() {
           }
           .animate-bounce-dot {
             animation: bounce-dot 1.2s ease-in-out infinite;
+          }
+          @keyframes float-unicorn {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(-5px) rotate(-3deg); }
+            75% { transform: translateY(-20px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+          }
+          .animate-float-unicorn {
+            animation: float-unicorn 6s ease-in-out infinite;
           }
         `}</style>
       </div>

@@ -1,6 +1,7 @@
 # DemoX
 
 AI agent for automating demos so you can focus on things that matter.
+[Watch DEMO video](https://www.youtube.com/watch?v=QxmS635s4zc)
 
 ## Prerequisites
 
